@@ -1,9 +1,6 @@
 package com.visualtimer;
 
 import lombok.extern.slf4j.Slf4j;
-import javax.sound.sampled.*;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 import net.runelite.client.audio.AudioPlayer;
 
 @Slf4j
