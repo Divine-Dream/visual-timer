@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import net.runelite.client.audio.AudioPlayer;
 
 @Slf4j
 public class VisualTimer
 {
+    private AudioPlayer audioPlayer;
     private final String name;
     private final long durationMillis;
     private final String initialFormattedTime;
@@ -175,20 +177,15 @@ public class VisualTimer
 
     private void playAlarmSound()
     {
+        if (!plugin.getConfig().playSoundOnExpire())
+        {
+            return;
+        }
+
         try
         {
-            InputStream audioSrc = getClass().getResourceAsStream("/alarm.wav");
-            if (audioSrc == null)
-            {
-                log.warn("Alarm sound file not found.");
-                return;
-            }
-
-            BufferedInputStream bufferedIn = new BufferedInputStream(audioSrc);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
+            // this doesn't play audio. I don't know why, i cba I'll update it later
+            plugin.getAudioPlayer().play(getClass(), "/Alarm.wav", 0.8f); // 80% volume
         }
         catch (Exception e)
         {

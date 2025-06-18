@@ -15,6 +15,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
+import net.runelite.client.audio.AudioPlayer;
 
 import java.awt.image.BufferedImage;
 
@@ -24,6 +25,7 @@ import static net.runelite.api.MenuAction.RUNELITE_OVERLAY;
 @PluginDescriptor(name = "Visual Timer")
 public class VisualTimerPlugin extends Plugin
 {
+	private AudioPlayer audioPlayer;
 	@Inject private Client client;
 	@Inject private VisualTimerConfig config;
 	@Inject private VisualTimerOverlayManager overlayManager;
@@ -143,6 +145,11 @@ public class VisualTimerPlugin extends Plugin
 	public VisualTimerConfig getConfig()
 	{
 		return config;
+	}
+
+	public AudioPlayer getAudioPlayer()
+	{
+		return audioPlayer;
 	}
 
 	@Provides
