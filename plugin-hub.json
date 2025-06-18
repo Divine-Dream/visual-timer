@@ -1,0 +1,6 @@
+{
+  "internalName": "visualtimer",
+  "displayName": "Visual Timer",
+  "description": "Displays customizable countdown timers on screen.",
+  "tags": ["utility", "timers", "overlay"]
+}
