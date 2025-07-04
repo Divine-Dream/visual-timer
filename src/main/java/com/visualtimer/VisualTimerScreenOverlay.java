@@ -36,11 +36,11 @@ public class VisualTimerScreenOverlay extends Overlay
         graphics.setColor(flashColor);
 
         Dimension dim = plugin.getClient().getRealDimensions();
-        log.info("Overlay dimensions: width={}, height={}", dim.width, dim.height);
+        log.debug("Overlay dimensions: width={}, height={}", dim.width, dim.height);
         int width = dim.width;
         int height = dim.height;
 
-        log.info("Rendering screen flash overlay");
+        log.debug("Rendering screen flash overlay");
         graphics.fillRect(0, 0, width, height);
 
         return new Dimension(width, height);

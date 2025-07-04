@@ -28,6 +28,8 @@ public class VisualTimerOverlayManager
     {
         overlayManager.add(overlay); // this is the RuneLite OverlayManager
     }
+    public void remove(Overlay overlay) { overlayManager.remove(overlay); }
+
 
     public void addTimer(VisualTimer timer)
     {

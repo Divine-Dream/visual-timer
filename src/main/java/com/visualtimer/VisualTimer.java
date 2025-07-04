@@ -83,13 +83,13 @@ public class VisualTimer
 
     public void tick(VisualTimerConfig config)
     {
-        log.info("Tick Start: expired={}, hasFlashed={}, screenFlashCount={}, screenFlashTicks={}",
+        log.debug("Tick Start: expired={}, hasFlashed={}, screenFlashCount={}, screenFlashTicks={}",
                 expired, hasFlashed, screenFlashCount, screenFlashTicks);
 
         if (running)
         {
             remainingTicks = Math.max(0, remainingTicks - 1);
-            log.info("Tick: remainingTicks={}, expired={}", remainingTicks, expired);
+            log.debug("Tick: remainingTicks={}, expired={}", remainingTicks, expired);
 
             if (remainingTicks == 0 && !expired)
             {
@@ -98,7 +98,7 @@ public class VisualTimer
                 hasFlashed = false;
                 screenFlashCount = 0;
                 screenFlashTicks = 0;
-                log.info("Timer expired, starting screen flash");
+                log.debug("Timer expired, starting screen flash");
                 if (plugin.getConfig().playSoundOnExpire())
                 {
                     playAlarmSound();
@@ -108,23 +108,23 @@ public class VisualTimer
 
         if (expired && !hasFlashed && config.expirationEffect() == VisualTimerConfig.ExpirationEffect.FLASH_SCREEN)
         {
-            log.info("Flash tick {} (flashCount={})", screenFlashTicks, screenFlashCount);
+            log.debug("Flash tick {} (flashCount={})", screenFlashTicks, screenFlashCount);
 
             boolean showFlash = screenFlashTicks % 2 == 0;
             plugin.setScreenFlashing(showFlash);
-            log.info("Flashing screen? {}", showFlash);
+            log.debug("Flashing screen? {}", showFlash);
 
             if (!showFlash)
             {
                 screenFlashCount++;
-                log.info("Incremented flash count to {}", screenFlashCount);
+                log.debug("Incremented flash count to {}", screenFlashCount);
             }
 
             screenFlashTicks++;
 
             if (screenFlashCount >= 3)
             {
-                log.info("Stopping flash after 3 full flashes");
+                log.debug("Stopping flash after 3 full flashes");
                 plugin.setScreenFlashing(false);
                 hasFlashed = true;
             }

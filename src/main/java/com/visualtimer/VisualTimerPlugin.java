@@ -42,7 +42,7 @@ public class VisualTimerPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Visual Timer started!");
+		log.debug("Visual Timer started!");
 
 		BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/panel_icon.png");
 
@@ -59,9 +59,10 @@ public class VisualTimerPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("Visual Timer stopped!");
+		log.debug("Visual Timer stopped!");
 		clientToolbar.removeNavigation(navButton);
 		overlayManager.removeAllTimers();
+		overlayManager.remove(screenOverlay);
 	}
 
 	@Subscribe
