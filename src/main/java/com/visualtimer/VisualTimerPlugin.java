@@ -90,10 +90,10 @@ public class VisualTimerPlugin extends Plugin
 	@Subscribe
 	public void onGameStateChanged(GameStateChanged event)
 	{
-		if (event.getGameState() == GameState.LOGGED_IN)
-		{
-			client.addChatMessage(net.runelite.api.ChatMessageType.GAMEMESSAGE, "", "Visual Timer is ready.", null);
-		}
+//		if (event.getGameState() == GameState.LOGGED_IN)
+//		{
+//			client.addChatMessage(net.runelite.api.ChatMessageType.GAMEMESSAGE, "", "Visual Timer is ready.", null);
+//		}
 	}
 
 	@Subscribe
