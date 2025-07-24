@@ -3,6 +3,9 @@ package com.visualtimer;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.audio.AudioPlayer;
 
+import javax.inject.Inject;
+import java.net.URL;
+
 @Slf4j
 public class VisualTimer
 {
@@ -174,6 +177,12 @@ public class VisualTimer
 
     private void playAlarmSound()
     {
+        audioPlayer = plugin.getAudioPlayer();
+        if (audioPlayer == null)
+        {
+            log.error("audioplayer is null");
+            return;
+        }
         if (!plugin.getConfig().playSoundOnExpire())
         {
             return;
@@ -181,12 +190,21 @@ public class VisualTimer
 
         try
         {
+            URL url = getClass().getResource("/Alarm.wav");
+            if (url == null)
+            {
+                log.error("Alarm.wav not found in resources!");
+                return;
+            }
+            plugin.getAudioPlayer().play(url.openStream(), 0.8f); // You may need to adapt this call
+
             // this doesn't play audio. I don't know why, i cba I'll update it later
-            plugin.getAudioPlayer().play(getClass(), "/Alarm.wav", 0.8f); // 80% volume
+            //plugin.getAudioPlayer().play(getClass(), "/Alarm.wav", 0.8f); // 80% volume
         }
         catch (Exception e)
         {
             log.error("Failed to play alarm sound", e);
+            e.printStackTrace();
         }
     }
 }

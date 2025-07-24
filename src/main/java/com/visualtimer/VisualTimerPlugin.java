@@ -42,6 +42,7 @@ public class VisualTimerPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
+		audioPlayer = new AudioPlayer();
 		log.debug("Visual Timer started!");
 
 		BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/panel_icon.png");
