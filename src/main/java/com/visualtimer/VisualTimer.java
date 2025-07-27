@@ -9,6 +9,7 @@ import java.net.URL;
 @Slf4j
 public class VisualTimer
 {
+    @Inject
     private AudioPlayer audioPlayer;
     private final String name;
     private final long durationMillis;
@@ -190,16 +191,7 @@ public class VisualTimer
 
         try
         {
-            URL url = getClass().getResource("/Alarm.wav");
-            if (url == null)
-            {
-                log.error("Alarm.wav not found in resources!");
-                return;
-            }
-            plugin.getAudioPlayer().play(url.openStream(), 0.8f); // You may need to adapt this call
-
-            // this doesn't play audio. I don't know why, i cba I'll update it later
-            //plugin.getAudioPlayer().play(getClass(), "/Alarm.wav", 0.8f); // 80% volume
+            audioPlayer.play(VisualTimerPlugin.class, "/Alarm.wav", 0.8f);
         }
         catch (Exception e)
         {

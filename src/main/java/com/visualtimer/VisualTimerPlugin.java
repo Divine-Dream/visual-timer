@@ -25,6 +25,7 @@ import static net.runelite.api.MenuAction.RUNELITE_OVERLAY;
 @PluginDescriptor(name = "Visual Timer")
 public class VisualTimerPlugin extends Plugin
 {
+	@Inject
 	private AudioPlayer audioPlayer;
 	@Inject private Client client;
 	@Inject private VisualTimerConfig config;
@@ -42,7 +43,6 @@ public class VisualTimerPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		audioPlayer = new AudioPlayer();
 		log.debug("Visual Timer started!");
 
 		BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/panel_icon.png");
