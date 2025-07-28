@@ -196,7 +196,6 @@ public class VisualTimer
         catch (Exception e)
         {
             log.error("Failed to play alarm sound", e);
-            e.printStackTrace();
         }
     }
 }
