@@ -1,5 +1,6 @@
 package com.visualtimer;
 
+import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.ui.PluginPanel;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import net.runelite.client.chat.ChatMessageManager;
 
 public class VisualTimerPanel extends PluginPanel
 {
@@ -22,12 +24,14 @@ public class VisualTimerPanel extends PluginPanel
 
     private final Color backgroundColor = new Color(38, 38, 38);
     private final Color inputBackground = new Color(30, 30, 30);
+    private final ChatMessageManager chatMessageManager;
 
     @Inject
-    public VisualTimerPanel(VisualTimerOverlayManager overlayManager, VisualTimerPlugin plugin)
+    public VisualTimerPanel(VisualTimerOverlayManager overlayManager, VisualTimerPlugin plugin, ChatMessageManager chatMessageManager)
     {
         this.overlayManager = overlayManager;
         this.plugin = plugin;
+        this.chatMessageManager = chatMessageManager;
 
         setLayout(new BorderLayout(0, 10));
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -180,7 +184,7 @@ public class VisualTimerPanel extends PluginPanel
             return;
         }
 
-        VisualTimer timer = new VisualTimer(name, totalMillis);
+        VisualTimer timer = new VisualTimer(name, totalMillis, plugin, chatMessageManager);
         timer.setPlugin(plugin);
         timer.start();
         overlayManager.addTimer(timer);

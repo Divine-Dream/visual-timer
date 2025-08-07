@@ -1,16 +1,19 @@
 package com.visualtimer;
 
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.Client;
 import net.runelite.client.audio.AudioPlayer;
 
 import javax.inject.Inject;
-import java.net.URL;
+
+import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 
 @Slf4j
 public class VisualTimer
 {
-    @Inject
-    private AudioPlayer audioPlayer;
+    @Inject private AudioPlayer audioPlayer;
     private final String name;
     private final long durationMillis;
     private final String initialFormattedTime;
@@ -28,15 +31,18 @@ public class VisualTimer
     private boolean hasFlashed = false;
     private int screenFlashCount = 0;
     private int screenFlashTicks = 0;
+    private final ChatMessageManager chatMessageManager;
 
-    public VisualTimer(String name, long durationMillis)
+    public VisualTimer(String name, long durationMillis, VisualTimerPlugin plugin, ChatMessageManager chatMessageManager)
     {
         this.name = name;
         this.durationMillis = durationMillis;
         this.initialFormattedTime = formatTime(durationMillis);
-
         this.remainingTicks = (int) (durationMillis / 600);
         this.totalTicks = remainingTicks;
+
+        this.plugin = plugin;
+        this.chatMessageManager = chatMessageManager;
     }
 
     public void start()
@@ -106,6 +112,10 @@ public class VisualTimer
                 if (plugin.getConfig().playSoundOnExpire())
                 {
                     playAlarmSound();
+                }
+                if (plugin.getConfig().enableWatchdogMessage())
+                {
+                    sendWatchdogMessage();
                 }
             }
         }
@@ -197,5 +207,13 @@ public class VisualTimer
         {
             log.error("Failed to play alarm sound", e);
         }
+    }
+
+    private void sendWatchdogMessage()
+    {
+        chatMessageManager.queue(QueuedMessage.builder()
+                .type(ChatMessageType.GAMEMESSAGE)
+                .runeLiteFormattedMessage("Visual Timer expired!")
+                .build());
     }
 }

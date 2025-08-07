@@ -37,6 +37,16 @@ public interface VisualTimerConfig extends Config
 		return false;
 	}
 
+	@ConfigItem(
+			keyName = "enableWatchdogMessage",
+			name = "Enable Watchdog Message",
+			description = "When the timer expires, send an in game message which Watchdog can use for custom alerts."
+	)
+	default boolean enableWatchdogMessage()
+	{
+		return true;
+	}
+
 	enum ExpirationEffect
 	{
 		FLASH_TEXT_SLOW,

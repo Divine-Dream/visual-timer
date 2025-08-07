@@ -16,6 +16,7 @@ import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
 import net.runelite.client.audio.AudioPlayer;
+import net.runelite.client.chat.ChatMessageManager;
 
 import java.awt.image.BufferedImage;
 
@@ -33,6 +34,8 @@ public class VisualTimerPlugin extends Plugin
 	@Inject private VisualTimerPanel visualTimerPanel;
 	@Inject private ClientToolbar clientToolbar;
 	@Inject private VisualTimerScreenOverlay screenOverlay;
+	@Inject private ChatMessageManager chatMessageManager;
+
 
 	private NavigationButton navButton;
 
