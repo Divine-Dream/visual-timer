@@ -8,6 +8,16 @@ import net.runelite.client.config.ConfigItem;
 public interface VisualTimerConfig extends Config
 {
 	@ConfigItem(
+			keyName = "countUpTimer",
+			name = "Count Up Timer",
+			description = "When enabled, timers count from 0 up to the entered duration"
+	)
+	default boolean countUpTimer()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 			keyName = "showExpiredTimers",
 			name = "Show Expired Timers",
 			description = "Whether to show timers after they expire"
