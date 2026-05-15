@@ -184,7 +184,7 @@ public class VisualTimerPanel extends PluginPanel
             return;
         }
 
-        VisualTimer timer = new VisualTimer(name, totalMillis, plugin, chatMessageManager);
+        VisualTimer timer = new VisualTimer(name, totalMillis, plugin, chatMessageManager, plugin.getConfig().countUpTimer());
         timer.setPlugin(plugin);
         timer.start();
         overlayManager.addTimer(timer);

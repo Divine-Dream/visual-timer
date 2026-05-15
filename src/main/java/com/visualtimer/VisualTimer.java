@@ -17,6 +17,7 @@ public class VisualTimer
     private final String name;
     private final long durationMillis;
     private final String initialFormattedTime;
+    private final boolean countUpMode;
 
     private int remainingTicks;
     private int totalTicks;
@@ -33,13 +34,14 @@ public class VisualTimer
     private int screenFlashTicks = 0;
     private final ChatMessageManager chatMessageManager;
 
-    public VisualTimer(String name, long durationMillis, VisualTimerPlugin plugin, ChatMessageManager chatMessageManager)
+    public VisualTimer(String name, long durationMillis, VisualTimerPlugin plugin, ChatMessageManager chatMessageManager, boolean countUpMode)
     {
         this.name = name;
         this.durationMillis = durationMillis;
-        this.initialFormattedTime = formatTime(durationMillis);
-        this.remainingTicks = (int) (durationMillis / 600);
-        this.totalTicks = remainingTicks;
+        this.countUpMode = countUpMode;
+        this.initialFormattedTime = countUpMode ? formatTime(0) : formatTime(durationMillis);
+        this.remainingTicks = countUpMode ? 0 : (int) (durationMillis / 600);
+        this.totalTicks = (int) (durationMillis / 600);
 
         this.plugin = plugin;
         this.chatMessageManager = chatMessageManager;
@@ -55,8 +57,9 @@ public class VisualTimer
             screenFlashTicks = 0;
             hasFlashed = false;
 
-            remainingTicks = (int)(durationMillis / 600) + 1; // Add 0.6s buffer
-            totalTicks = remainingTicks;
+            int bufferedTicks = (int) (durationMillis / 600) + 1; // Add 0.6s buffer
+            totalTicks = bufferedTicks;
+            remainingTicks = countUpMode ? 0 : bufferedTicks;
         }
     }
 
@@ -98,10 +101,18 @@ public class VisualTimer
 
         if (running)
         {
-            remainingTicks = Math.max(0, remainingTicks - 1);
+            if (countUpMode)
+            {
+                remainingTicks = Math.min(totalTicks, remainingTicks + 1);
+            }
+            else
+            {
+                remainingTicks = Math.max(0, remainingTicks - 1);
+            }
             log.debug("Tick: remainingTicks={}, expired={}", remainingTicks, expired);
 
-            if (remainingTicks == 0 && !expired)
+            boolean timerFinished = countUpMode ? remainingTicks >= totalTicks : remainingTicks == 0;
+            if (timerFinished && !expired)
             {
                 expired = true;
                 running = false;
